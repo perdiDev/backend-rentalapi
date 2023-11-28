@@ -14,3 +14,102 @@
 7. Done!!!
 
 Kalau masih ada yang error, langsung tanya aja.
+
+
+# Dokumentasi
+
+## Fitur kendaraan
+
+GET :: /api/kendaraan/
+
+example response:
+
+```json
+[
+    {
+    "kendaraanId": 1,
+    "namaKendaraan": "Agaya Avansa",
+    "tipeKendaraan": "Sedang",
+    "hargaSewa": 200,
+    "jumlahKetersediaan": 3
+    },
+    {
+    "kendaraanId": 3,
+    "namaKendaraan": "Paris Mitsu",
+    "tipeKendaraan": "Motor",
+    "hargaSewa": 320,
+    "jumlahKetersediaan": 3
+    },
+]
+```
+
+GET :: /api/kendaraan/{kendaraanId}
+
+example response:
+
+```json
+{
+"kendaraanId": 1,
+"namaKendaraan": "Agaya Avansa",
+"tipeKendaraan": "Sedang",
+"hargaSewa": 200,
+"jumlahKetersediaan": 3
+}
+```
+
+POST :: /api/kendaraan (Access by Admin)
+
+request body:
+
+```json
+{
+  "namaKendaraan": "New Mitsu",
+  "tipeKendaraan": "Motor",
+  "hargaSewa": 320,
+  "jumlahKetersediaan": 3
+}
+```
+example response:
+
+```json
+{
+"kendaraanId": 1,
+"namaKendaraan": "New Mitsu",
+"tipeKendaraan": "Motor",
+"hargaSewa": 320,
+"jumlahKetersediaan": 3
+}
+```
+
+PUT :: /api/kendaraan/{kendaraanId} (Access by Admin)
+
+request body:
+
+```json
+{
+  "namaKendaraan": "New Mitsu",
+  "tipeKendaraan": "Motor",
+  "hargaSewa": 320,
+  "jumlahKetersediaan": 3
+}
+```
+
+example response:
+
+```json
+{
+  "success": true
+}
+```
+
+DELETE :: /api/kendaraan/{kendaraanId} (Access by Admin)
+
+example response:
+
+```json
+{
+  "success": true
+}
+```
+
+
