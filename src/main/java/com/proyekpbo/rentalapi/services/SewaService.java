@@ -6,5 +6,5 @@ import com.proyekpbo.rentalapi.exceptions.BadRequestException;
 public interface SewaService {
 
     Sewa fetchSewaById(Integer sewaId, Integer userId, Integer kendaraanId) throws NoClassDefFoundError;
-    Sewa addSewa(Integer userId, Integer kendaraanId, Long tanggalSewa, Integer lamaSewa, Integer totalHargaSewa) throws BadRequestException;
+    Sewa addSewa(Integer userId, Integer kendaraanId, Long tanggalSewa, Integer lamaSewa) throws BadRequestException;
 }

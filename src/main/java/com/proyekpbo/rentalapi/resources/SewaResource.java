@@ -34,9 +34,8 @@ public class SewaResource {
         int userId = (Integer) request.getAttribute("userId");
         Long tanggalSewa = (Long) sewaMap.get("tanggalSewa");
         Integer lamaSewa = (Integer) sewaMap.get("lamaSewa");
-        Integer totalHargaSewa = (Integer) sewaMap.get("totalHargaSewa");
 
-        Sewa sewa = sewaService.addSewa(userId, kendaraanId, tanggalSewa, lamaSewa, totalHargaSewa);
+        Sewa sewa = sewaService.addSewa(userId, kendaraanId, tanggalSewa, lamaSewa);
         return new ResponseEntity<>(sewa, HttpStatus.CREATED);
     }
 

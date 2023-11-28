@@ -1,5 +1,6 @@
 package com.proyekpbo.rentalapi.repositories;
 
+import com.proyekpbo.rentalapi.domain.Kendaraan;
 import com.proyekpbo.rentalapi.domain.Sewa;
 import com.proyekpbo.rentalapi.exceptions.BadRequestException;
 import com.proyekpbo.rentalapi.exceptions.NotFoundException;
@@ -18,13 +19,19 @@ public class SewaRepositoryImpl implements SewaRepository{
 
     private static final String SQL_FIND_BY_ID = "SELECT * FROM sewa WHERE id_sewa = ? AND id_user = ? AND id_kendaraan = ?";
     private static final String SQL_CREATE = "INSERT INTO sewa(id_sewa, id_user, id_kendaraan, tanggal_sewa, lama_sewa, total_harga_sewa) VALUES(NEXTVAL('sewa_seq'), ?, ?, ?, ?, ?)";
+    private static final String SQL_GET_KENDARAAN_BY_IDo = "SELECT harga_sewa FROM kendaraan WHERE id_kendaraan = ?";
+    private static final String SQL_GET_KENDARAAN_BY_ID = "SELECT * FROM kendaraan WHERE id_kendaraan = ?";
 
     @Autowired
     JdbcTemplate jdbcTemplate;
 
     @Override
     public Sewa findById(Integer sewaId, Integer kendaraanId, Integer userId) throws NotFoundException {
-        return jdbcTemplate.queryForObject(SQL_FIND_BY_ID, new Object[]{sewaId, userId, kendaraanId}, sewaRowMapper);
+        try {
+            return jdbcTemplate.queryForObject(SQL_FIND_BY_ID, new Object[]{sewaId, userId, kendaraanId}, sewaRowMapper);
+        } catch (Exception e) {
+            throw new NotFoundException("Sewa not found");
+        }
     }
 
     @Override
@@ -46,6 +53,15 @@ public class SewaRepositoryImpl implements SewaRepository{
         }
     }
 
+    @Override
+    public Kendaraan findKendaraanById(Integer kendaraanId) throws NotFoundException {
+        try {
+            return jdbcTemplate.queryForObject(SQL_GET_KENDARAAN_BY_ID, new Object[]{kendaraanId}, kendaraanRowMapper);
+        } catch (Exception e) {
+            throw new NotFoundException("Kendaraan not found");
+        }
+    }
+
     private RowMapper<Sewa> sewaRowMapper = ((rs, rowNum) -> {
         return new Sewa(
                 rs.getInt("ID_SEWA"),
@@ -54,6 +70,16 @@ public class SewaRepositoryImpl implements SewaRepository{
                 rs.getLong("TANGGAL_SEWA"),
                 rs.getInt("LAMA_SEWA"),
                 rs.getInt("TOTAL_HARGA_SEWA")
+        );
+    });
+
+    private RowMapper<Kendaraan> kendaraanRowMapper = ((rs, rowNum) -> {
+        return new Kendaraan(
+                rs.getInt("id_kendaraan"),
+                rs.getString("nama_kendaraan"),
+                rs.getString("tipe_kendaraan"),
+                rs.getInt("harga_sewa"),
+                rs.getInt("jumlah_ketersediaan")
         );
     });
 }

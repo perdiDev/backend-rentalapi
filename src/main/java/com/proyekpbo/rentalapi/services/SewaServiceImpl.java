@@ -1,8 +1,10 @@
 package com.proyekpbo.rentalapi.services;
 
+import com.proyekpbo.rentalapi.domain.Kendaraan;
 import com.proyekpbo.rentalapi.domain.Sewa;
 import com.proyekpbo.rentalapi.exceptions.BadRequestException;
 import com.proyekpbo.rentalapi.exceptions.NotFoundException;
+import com.proyekpbo.rentalapi.repositories.KendaraanRepository;
 import com.proyekpbo.rentalapi.repositories.SewaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +23,10 @@ public class SewaServiceImpl implements SewaService {
     }
 
     @Override
-    public Sewa addSewa(Integer userId, Integer kendaraanId, Long tanggalSewa, Integer lamaSewa, Integer totalHargaSewa) throws BadRequestException {
+    public Sewa addSewa(Integer userId, Integer kendaraanId, Long tanggalSewa, Integer lamaSewa) throws BadRequestException {
+        Kendaraan kendaraan = sewaRepository.findKendaraanById(kendaraanId);
+        Integer totalHargaSewa = lamaSewa * kendaraan.getHargaSewa();
+
         Integer sewaId = sewaRepository.create(userId, kendaraanId, tanggalSewa, lamaSewa, totalHargaSewa);
         return sewaRepository.findById(sewaId, userId, kendaraanId);
     }
