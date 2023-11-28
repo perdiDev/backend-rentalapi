@@ -13,6 +13,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/kendaraan")
@@ -39,7 +40,11 @@ public class KendaraanResource {
     ResponseEntity<Kendaraan> addKendaraan(
             HttpServletRequest request,
             @RequestBody Map<String, Object> kendaraanMap
-    ) {
+    ) throws AuthException {
+        String statusUser = (String) request.getAttribute("status");
+        if(!statusUser.equals("admin")) {
+            throw  new AuthException("Unauthorized");
+        }
         Integer userId = (Integer) request.getAttribute("userId");
 
         String namaKendaraan = (String) kendaraanMap.get("namaKendaraan");
@@ -53,9 +58,14 @@ public class KendaraanResource {
 
     @PutMapping("/{kendaraanId}")
     ResponseEntity<Map<String, Boolean>> updateKendaraan(
+            HttpServletRequest request,
             @PathVariable("kendaraanId") Integer kendaraanId,
             @RequestBody Kendaraan kendaraan
-    ) {
+    ) throws AuthException {
+        String statusUser = (String) request.getAttribute("status");
+        if(!statusUser.equals("admin")) {
+            throw  new AuthException("Unauthorized");
+        }
         kendaraanService.updateKendaraan(kendaraanId, kendaraan);
         Map<String, Boolean> map = new HashMap<>();
         map.put("success", true);
@@ -64,8 +74,13 @@ public class KendaraanResource {
 
     @DeleteMapping("/{kendaraanId}")
     ResponseEntity<Map<String, Boolean>> deleteKendaraan(
+            HttpServletRequest request,
             @PathVariable("kendaraanId") Integer kendaraanId
-    ) {
+    ) throws AuthException {
+        String statusUser = (String) request.getAttribute("status");
+        if(!statusUser.equals("admin")) {
+            throw  new AuthException("Unauthorized");
+        }
         kendaraanService.removeKendaraan(kendaraanId);
         Map<String, Boolean> map = new HashMap<>();
         map.put("success", true);
