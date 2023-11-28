@@ -13,20 +13,25 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.List;
 
 @Repository
 public class SewaRepositoryImpl implements SewaRepository{
 
+    private static final String SQL_FIND_ALL_SEWA_BY_USER_ID = "SELECT * FROM sewa WHERE id_user = ?";
     private static final String SQL_FIND_BY_ID = "SELECT * FROM sewa WHERE id_sewa = ? AND id_user = ? AND id_kendaraan = ?";
     private static final String SQL_CREATE = "INSERT INTO sewa(id_sewa, id_user, id_kendaraan, tanggal_sewa, lama_sewa, total_harga_sewa) VALUES(NEXTVAL('sewa_seq'), ?, ?, ?, ?, ?)";
-    private static final String SQL_GET_KENDARAAN_BY_IDo = "SELECT harga_sewa FROM kendaraan WHERE id_kendaraan = ?";
     private static final String SQL_GET_KENDARAAN_BY_ID = "SELECT * FROM kendaraan WHERE id_kendaraan = ?";
 
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+    public List<Sewa> findAllSewaByIdUser(Integer userId) {
+        return jdbcTemplate.query(SQL_FIND_ALL_SEWA_BY_USER_ID, new Object[]{userId}, sewaRowMapper);
+    }
+
     @Override
-    public Sewa findById(Integer sewaId, Integer kendaraanId, Integer userId) throws NotFoundException {
+    public Sewa findById(Integer sewaId, Integer userId, Integer kendaraanId) throws NotFoundException {
         try {
             return jdbcTemplate.queryForObject(SQL_FIND_BY_ID, new Object[]{sewaId, userId, kendaraanId}, sewaRowMapper);
         } catch (Exception e) {

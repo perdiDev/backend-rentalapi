@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -17,6 +18,13 @@ public class SewaResource {
 
     @Autowired
     SewaService sewaService;
+
+    @GetMapping("")
+    ResponseEntity<List<Sewa>> getAllSewa(HttpServletRequest request) {
+        int userId = (Integer) request.getAttribute("userId");
+        List<Sewa> sewas = sewaService.fetchAllSewaByIdUser(userId);
+        return new ResponseEntity<>(sewas, HttpStatus.OK);
+    }
 
     @GetMapping("/{sewaId}")
     ResponseEntity<Sewa> getSewaById(HttpServletRequest request,
