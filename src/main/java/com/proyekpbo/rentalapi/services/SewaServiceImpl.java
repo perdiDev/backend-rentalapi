@@ -33,7 +33,14 @@ public class SewaServiceImpl implements SewaService {
         Kendaraan kendaraan = sewaRepository.findKendaraanById(kendaraanId);
         Integer totalHargaSewa = lamaSewa * kendaraan.getHargaSewa();
 
-        Integer sewaId = sewaRepository.create(userId, kendaraan.getKendaraanId(), tanggalSewa, lamaSewa, totalHargaSewa);
+        if(kendaraan.getJumlahKetersediaan() <= 0) {
+            throw new BadRequestException("Kendaraan not available");
+        }
+        // Update ketersediaan kendaraan
+        Integer jumlahKendaraan = kendaraan.getJumlahKetersediaan() - 1;
+        sewaRepository.updateKetersediaanKendaraan(kendaraanId, jumlahKendaraan);
+
+        Integer sewaId = sewaRepository.create(userId, kendaraanId, tanggalSewa, lamaSewa, totalHargaSewa);
         return sewaRepository.findById(sewaId, userId, kendaraanId);
     }
 

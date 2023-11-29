@@ -23,6 +23,7 @@ public class SewaRepositoryImpl implements SewaRepository{
     private static final String SQL_CREATE = "INSERT INTO sewa(id_sewa, id_user, id_kendaraan, tanggal_sewa, lama_sewa, total_harga_sewa) VALUES(NEXTVAL('sewa_seq'), ?, ?, ?, ?, ?)";
     private static final String SQL_GET_KENDARAAN_BY_ID = "SELECT * FROM kendaraan WHERE id_kendaraan = ?";
     private static final String SQL_UPDATE_STATUS = "UPDATE sewa SET status_sewa = ?::status_sewa, denda_sewa = ? WHERE id_sewa = ?";
+    private static final String SQL_UPDATE_KETERSEDIAAN_KENDARAAN = "UPDATE kendaraan SET jumlah_ketersediaan = ? WHERE id_kendaraan = ?";
 
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -68,6 +69,17 @@ public class SewaRepositoryImpl implements SewaRepository{
             System.out.println(e);
             throw new BadRequestException("Invalid request");
         }
+    }
+
+    @Override
+    public void updateKetersediaanKendaraan(Integer kendaraanId, Integer jumlahKendaraan) throws BadRequestException {
+        try {
+            jdbcTemplate.update(SQL_UPDATE_KETERSEDIAAN_KENDARAAN, new Object[]{jumlahKendaraan, kendaraanId});
+        } catch (Exception e) {
+            System.out.println(e);
+            throw new BadRequestException("Invalid request");
+        }
+
     }
 
     @Override
