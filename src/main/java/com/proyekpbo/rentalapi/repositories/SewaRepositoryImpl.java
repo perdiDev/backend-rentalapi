@@ -22,7 +22,7 @@ public class SewaRepositoryImpl implements SewaRepository{
     private static final String SQL_FIND_BY_ID = "SELECT * FROM sewa WHERE id_sewa = ? AND id_user = ? AND id_kendaraan = ?";
     private static final String SQL_CREATE = "INSERT INTO sewa(id_sewa, id_user, id_kendaraan, tanggal_sewa, lama_sewa, total_harga_sewa) VALUES(NEXTVAL('sewa_seq'), ?, ?, ?, ?, ?)";
     private static final String SQL_GET_KENDARAAN_BY_ID = "SELECT * FROM kendaraan WHERE id_kendaraan = ?";
-    private static final String SQL_UPDATE_STATUS = "UPDATE sewa SET status_sewa = ?::status_sewa WHERE id_sewa = ?";
+    private static final String SQL_UPDATE_STATUS = "UPDATE sewa SET status_sewa = ?::status_sewa, denda_sewa = ? WHERE id_sewa = ?";
 
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -61,9 +61,9 @@ public class SewaRepositoryImpl implements SewaRepository{
     }
 
     @Override
-    public void updateStatusSewaById(Integer sewaId, String statusSewa) throws BadRequestException {
+    public void updateStatusSewaById(Integer sewaId, String statusSewa, Integer dendaSewa) throws BadRequestException {
         try {
-            jdbcTemplate.update(SQL_UPDATE_STATUS, new Object[]{statusSewa, sewaId});
+            jdbcTemplate.update(SQL_UPDATE_STATUS, new Object[]{statusSewa, dendaSewa, sewaId});
         } catch (Exception e) {
             System.out.println(e);
             throw new BadRequestException("Invalid request");
@@ -87,7 +87,8 @@ public class SewaRepositoryImpl implements SewaRepository{
                 rs.getLong("TANGGAL_SEWA"),
                 rs.getInt("LAMA_SEWA"),
                 rs.getInt("TOTAL_HARGA_SEWA"),
-                rs.getString("STATUS_SEWA")
+                rs.getString("STATUS_SEWA"),
+                rs.getInt("DENDA_SEWA")
         );
     });
 

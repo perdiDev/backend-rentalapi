@@ -61,7 +61,8 @@ public class SewaResource {
         }
 
         String statusSewa = (String) sewaMap.get("statusSewa");
-        sewaService.updateStatusSewa(sewaId, statusSewa);
+        Integer dendaSewa = (Integer) sewaMap.get("dendaSewa");
+        sewaService.updateStatusSewa(sewaId, statusSewa, dendaSewa);
 
         Map<String, Boolean> map = new HashMap<>();
         map.put("status", true);

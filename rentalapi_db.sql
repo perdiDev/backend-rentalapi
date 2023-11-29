@@ -32,7 +32,8 @@ create table sewa (
     tanggal_sewa bigint not null,
     lama_sewa integer not null,
     total_harga_sewa integer not null,
-    status_sewa status_sewa default 'belum_bayar'
+    status_sewa status_sewa default 'belum_bayar',
+    denda_sewa integer default 0 not null
 );
 
 alter table sewa add constraint sewa_user_fk
@@ -43,3 +44,6 @@ foreign key (id_kendaraan) references kendaraan(id_kendaraan);
 create sequence users_seq increment 1 start 1;
 create sequence kendaraan_seq increment 1 start 1;
 create sequence sewa_seq increment 1 start 1;
+
+insert into users(id_user, status, nama, alamat, email, password)
+values(nextval('users_seq'), 'admin', 'admin', 'home', 'admin@uh.id', '$2a$10$7Re4gbf6lN24HrtrfYu1WOMsiARUDBrWbkcyS5/Bm5vzbZnpEPcby');
