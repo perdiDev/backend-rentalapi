@@ -9,8 +9,9 @@ public class Sewa {
     private Integer totalHargaSewa;
 
     private String statusSewa;
+    private Integer dendaSewa;
 
-    public Sewa(Integer sewaId, Integer userId, Integer kendaraanId, Long tanggalSewa, Integer lamaSewa, Integer totalHargaSewa, String statusSewa) {
+    public Sewa(Integer sewaId, Integer userId, Integer kendaraanId, Long tanggalSewa, Integer lamaSewa, Integer totalHargaSewa, String statusSewa, Integer dendaSewa) {
         this.sewaId = sewaId;
         this.userId = userId;
         this.kendaraanId = kendaraanId;
@@ -18,6 +19,7 @@ public class Sewa {
         this.lamaSewa = lamaSewa;
         this.totalHargaSewa = totalHargaSewa;
         this.statusSewa = statusSewa;
+        this.dendaSewa = dendaSewa;
     }
 
     public Integer getSewaId() {
@@ -74,5 +76,13 @@ public class Sewa {
 
     public void setStatusSewa(String statusSewa) {
         this.statusSewa = statusSewa;
+    }
+
+    public Integer getDendaSewa() {
+        return dendaSewa;
+    }
+
+    public void setDendaSewa(Integer dendaSewa) {
+        this.dendaSewa = dendaSewa;
     }
 }

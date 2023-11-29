@@ -87,7 +87,8 @@ public class SewaRepositoryImpl implements SewaRepository{
                 rs.getLong("TANGGAL_SEWA"),
                 rs.getInt("LAMA_SEWA"),
                 rs.getInt("TOTAL_HARGA_SEWA"),
-                rs.getString("STATUS_SEWA")
+                rs.getString("STATUS_SEWA"),
+                rs.getInt("DENDA_SEWA")
         );
     });
 
