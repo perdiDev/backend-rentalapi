@@ -2,6 +2,7 @@ package com.proyekpbo.rentalapi.resources;
 
 import com.proyekpbo.rentalapi.domain.Kendaraan;
 import com.proyekpbo.rentalapi.domain.Sewa;
+import com.proyekpbo.rentalapi.exceptions.AuthException;
 import com.proyekpbo.rentalapi.services.SewaService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,4 +49,22 @@ public class SewaResource {
         return new ResponseEntity<>(sewa, HttpStatus.CREATED);
     }
 
+    @PutMapping("/{sewaId}")
+    ResponseEntity<Map<String, Boolean>> updateStatusSewaById(
+            HttpServletRequest request,
+            @PathVariable("sewaId") Integer sewaId,
+            @RequestBody Map<String, Object> sewaMap
+    ) {
+        String statusUser = (String) request.getAttribute("status");
+        if(!statusUser.equals("admin")) {
+            throw  new AuthException("Unauthorized");
+        }
+
+        String statusSewa = (String) sewaMap.get("statusSewa");
+        sewaService.updateStatusSewa(sewaId, statusSewa);
+
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("status", true);
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
 }

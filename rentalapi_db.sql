@@ -24,13 +24,15 @@ create table kendaraan (
     jumlah_ketersediaan integer not null
 );
 
+create type status_sewa as enum('belum_bayar', 'pakai', 'dikembalikan');
 create table sewa (
     id_sewa integer primary key not null,
     id_user integer not null,
     id_kendaraan integer not null,
     tanggal_sewa bigint not null,
     lama_sewa integer not null,
-    total_harga_sewa integer not null
+    total_harga_sewa integer not null,
+    status_sewa status_sewa default 'belum_bayar'
 );
 
 alter table sewa add constraint sewa_user_fk

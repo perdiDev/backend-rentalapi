@@ -36,4 +36,8 @@ public class SewaServiceImpl implements SewaService {
         Integer sewaId = sewaRepository.create(userId, kendaraan.getKendaraanId(), tanggalSewa, lamaSewa, totalHargaSewa);
         return sewaRepository.findById(sewaId, userId, kendaraanId);
     }
+
+    public void updateStatusSewa(Integer sewaId, String statusSewa) throws BadRequestException {
+        sewaRepository.updateStatusSewaById(sewaId, statusSewa);
+    }
 }

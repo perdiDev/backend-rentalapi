@@ -13,4 +13,5 @@ public interface SewaRepository {
     Sewa findById(Integer sewaId, Integer kendaraanId, Integer userId) throws NotFoundException;
     Integer create(Integer userId, Integer kendaraanId, Long tanggalSewa, Integer lamaSewa, Integer totalHargaSewa) throws BadRequestException;
     Kendaraan findKendaraanById(Integer kendaraanId) throws NotFoundException;
+    void updateStatusSewaById(Integer sewaId, String statusSewa) throws BadRequestException;
 }
