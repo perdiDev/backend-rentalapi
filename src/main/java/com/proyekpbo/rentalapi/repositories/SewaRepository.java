@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface SewaRepository {
 
+    public List<Sewa> findAllSewaByAdmin();
     List<Sewa> findAllSewaByIdUser(Integer userId);
     Sewa findById(Integer sewaId, Integer kendaraanId, Integer userId) throws NotFoundException;
     Integer create(Integer userId, Integer kendaraanId, Long tanggalSewa, Integer lamaSewa, Integer totalHargaSewa) throws BadRequestException;

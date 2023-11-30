@@ -7,9 +7,23 @@ public class Sewa {
     private Long tanggalSewa;
     private Integer lamaSewa;
     private Integer totalHargaSewa;
-
     private String statusSewa;
     private Integer dendaSewa;
+    private String namaPenyewa;
+    private String alamatPenyewa;
+
+    public Sewa(Integer sewaId, Integer userId, Integer kendaraanId, Long tanggalSewa, Integer lamaSewa, Integer totalHargaSewa, String statusSewa, Integer dendaSewa, String namaPenyewa, String alamatPenyewa) {
+        this.sewaId = sewaId;
+        this.userId = userId;
+        this.kendaraanId = kendaraanId;
+        this.tanggalSewa = tanggalSewa;
+        this.lamaSewa = lamaSewa;
+        this.totalHargaSewa = totalHargaSewa;
+        this.statusSewa = statusSewa;
+        this.dendaSewa = dendaSewa;
+        this.namaPenyewa = namaPenyewa;
+        this.alamatPenyewa = alamatPenyewa;
+    }
 
     public Sewa(Integer sewaId, Integer userId, Integer kendaraanId, Long tanggalSewa, Integer lamaSewa, Integer totalHargaSewa, String statusSewa, Integer dendaSewa) {
         this.sewaId = sewaId;

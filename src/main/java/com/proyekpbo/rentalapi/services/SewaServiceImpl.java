@@ -19,6 +19,10 @@ public class SewaServiceImpl implements SewaService {
     @Autowired
     SewaRepository sewaRepository;
 
+    public List<Sewa> fetchAllSewaByAdmin() {
+        return sewaRepository.findAllSewaByAdmin();
+    }
+
     public List<Sewa> fetchAllSewaByIdUser(Integer userId) {
         return sewaRepository.findAllSewaByIdUser(userId);
     }

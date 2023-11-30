@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface SewaService {
 
+    public List<Sewa> fetchAllSewaByAdmin();
     public List<Sewa> fetchAllSewaByIdUser(Integer userId);
     Sewa fetchSewaById(Integer sewaId, Integer userId, Integer kendaraanId) throws NoClassDefFoundError;
     Sewa addSewa(Integer userId, Integer kendaraanId, Long tanggalSewa, Integer lamaSewa) throws BadRequestException;

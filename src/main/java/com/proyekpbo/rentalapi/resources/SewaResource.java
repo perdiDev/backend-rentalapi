@@ -21,8 +21,14 @@ public class SewaResource {
     @Autowired
     SewaService sewaService;
 
+    @GetMapping("/admin")
+    ResponseEntity<List<Sewa>> getAllSewaByAdmin() {
+        List<Sewa> sewas = sewaService.fetchAllSewaByAdmin();
+        return new ResponseEntity<>(sewas, HttpStatus.OK);
+    }
+
     @GetMapping("")
-    ResponseEntity<List<Sewa>> getAllSewa(HttpServletRequest request) {
+    ResponseEntity<List<Sewa>> getAllSewaByIdUser(HttpServletRequest request) {
         int userId = (Integer) request.getAttribute("userId");
         List<Sewa> sewas = sewaService.fetchAllSewaByIdUser(userId);
         return new ResponseEntity<>(sewas, HttpStatus.OK);

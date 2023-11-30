@@ -18,6 +18,7 @@ import java.util.List;
 @Repository
 public class SewaRepositoryImpl implements SewaRepository{
 
+    private static final String SQL_FIND_ALL_SEWA = "SELECT sewa.*, users.nama, users.alamat  FROM sewa JOIN users ON sewa.id_user = users.id_user";
     private static final String SQL_FIND_ALL_SEWA_BY_USER_ID = "SELECT * FROM sewa WHERE id_user = ?";
     private static final String SQL_FIND_BY_ID = "SELECT * FROM sewa WHERE id_sewa = ? AND id_user = ? AND id_kendaraan = ?";
     private static final String SQL_CREATE = "INSERT INTO sewa(id_sewa, id_user, id_kendaraan, tanggal_sewa, lama_sewa, total_harga_sewa) VALUES(NEXTVAL('sewa_seq'), ?, ?, ?, ?, ?)";
@@ -27,6 +28,10 @@ public class SewaRepositoryImpl implements SewaRepository{
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+    public List<Sewa> findAllSewaByAdmin() {
+        return jdbcTemplate.query(SQL_FIND_ALL_SEWA, sewaAllRowMapper);
+    }
 
     public List<Sewa> findAllSewaByIdUser(Integer userId) {
         return jdbcTemplate.query(SQL_FIND_ALL_SEWA_BY_USER_ID, new Object[]{userId}, sewaRowMapper);
@@ -101,6 +106,21 @@ public class SewaRepositoryImpl implements SewaRepository{
                 rs.getInt("TOTAL_HARGA_SEWA"),
                 rs.getString("STATUS_SEWA"),
                 rs.getInt("DENDA_SEWA")
+        );
+    });
+
+    private RowMapper<Sewa> sewaAllRowMapper = ((rs, rowNum) -> {
+        return new Sewa(
+                rs.getInt("ID_SEWA"),
+                rs.getInt("ID_USER"),
+                rs.getInt("ID_KENDARAAN"),
+                rs.getLong("TANGGAL_SEWA"),
+                rs.getInt("LAMA_SEWA"),
+                rs.getInt("TOTAL_HARGA_SEWA"),
+                rs.getString("STATUS_SEWA"),
+                rs.getInt("DENDA_SEWA"),
+                rs.getString("nama"),
+                rs.getString("alamat")
         );
     });
 
